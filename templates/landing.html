@@ -1,0 +1,81 @@
+
+<!DOCTYPE
+html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admiralty Market</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="landing-page">
+
+    <div class="landing-overlay">
+
+        <header class="landing-header">
+            <div class="market-logo">
+                <img src="{{ url_for('static', filename='images/navy.png') }}"
+                     alt="Admiralty Market">
+                <span>Admiralty Market</span>
+            </div>
+        </header>
+
+
+        <main class="landing-content">
+
+            <div class="welcome-text">
+                <p class="small-heading">WELCOME TO</p>
+
+                <h1>Admiralty Market</h1>
+
+                <p>
+                    Fresh groceries, better living 💚
+                </p>
+
+                <p class="description">
+                    Everything you need, all in one place.
+                    Explore our fresh produce, dairy, bakery,
+                    pantry essentials and more.
+                </p>
+            </div>
+
+
+            <a href="{{ url_for('homepage') }}" class="mall-link">
+
+                <div class="mall-card">
+
+                    <img src="{{ url_for('static', filename='images/mall.png') }}"
+                         alt="Admiralty Market Supermarket">
+
+                    <div class="mall-caption">
+                        <span>🛒</span>
+                        <strong>Enter the Market</strong>
+                        <span class="arrow">→</span>
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <p class="click-text">
+                Click the market to start shopping
+            </p>
+            
+
+        </main>
+
+
+        <footer class="landing-footer">
+            © 2026 Admiralty Market
+        </footer>
+
+    </div>
+
+</body>
+</html>
+```

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Checkout - Admiralty Market</title>
+
+<link rel="icon"
+      type="image/jpeg"
+      href="{{ url_for('static', filename='images/icon.jpeg') }}">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="checkout-page">
+
+<header class="checkout-header">
+
+
+<a href="{{ url_for('homepage') }}"
+   class="checkout-logo">
+
+    <img
+        src="{{ url_for('static', filename='images/navy.png') }}"
+        alt="Admiralty Market"
+    >
+
+    <span>
+        Admiralty Market
+    </span>
+
+</a>
+
+
+<span class="checkout-title">
+    Checkout
+</span>
+
+
+</header>
+
+<main class="checkout-container">
+
+
+<!-- =========================================
+     CUSTOMER INFORMATION
+========================================== -->
+
+<section class="checkout-form">
+
+    <h2>Customer Information</h2>
+
+
+    <!-- CUSTOMER DETAILS -->
+
+    <div>
+
+        <label for="customer_name">
+            Full Name
+        </label>
+
+        <input
+            type="text"
+            id="customer_name"
+            name="customer_name"
+            placeholder="Enter your full name"
+            required
+        >
+
+
+        <label for="phone">
+            Phone Number
+        </label>
+
+        <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="08012345678"
+            required
+        >
+
+
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+        >
+
+
+        <label for="address">
+            Delivery Address
+        </label>
+
+        <textarea
+            id="address"
+            name="address"
+            rows="4"
+            placeholder="Enter your delivery address"
+            required
+        ></textarea>
+
+    </div>
+
+
+    <!-- =========================================
+         PAYMENT METHOD
+    ========================================== -->
+
+    <h2>
+        Payment Method
+    </h2>
+
+
+    <div class="payment-option">
+
+        <label>
+
+            <input
+                type="radio"
+                name="payment_method"
+                value="Cash on Delivery"
+                checked
+                onchange="showCashPayment()"
+            >
+
+            💵 Cash on Delivery
+
+        </label>
+
+    </div>
+
+
+    <div class="payment-option">
+
+        <label>
+
+            <input
+                type="radio"
+                name="payment_method"
+                value="Paystack"
+                onchange="showPaystackPayment()"
+            >
+
+            💳 Pay Online with Paystack
+
+        </label>
+
+    </div>
+
+
+    <!-- =========================================
+         CASH ON DELIVERY FORM
+    ========================================== -->
+
+    <form
+        id="cashForm"
+        action="{{ url_for('place_order') }}"
+        method="POST"
+    >
+
+        <input
+            type="hidden"
+            name="customer_name"
+            id="cash_customer_name"
+        >
+
+        <input
+            type="hidden"
+            name="phone"
+            id="cash_phone"
+        >
+
+        <input
+            type="hidden"
+            name="email"
+            id="cash_email"
+        >
+
+        <input
+            type="hidden"
+            name="address"
+            id="cash_address"
+        >
+
+        <input
+            type="hidden"
+            name="payment_method"
+            value="Cash on Delivery"
+        >
+
+
+        <button
+            type="submit"
+            class="place-order-btn"
+            onclick="copyCustomerDetails('cash')"
+        >
+
+            💵 Place Order — Cash on Delivery
+
+        </button>
+
+    </form>
+
+
+
+    <!-- =========================================
+         PAYSTACK FORM
+    ========================================== -->
+
+    <form
+        id="paystackForm"
+        action="{{ url_for('initialize_payment') }}"
+        method="POST"
+        style="display:none;"
+    >
+
+        <input
+            type="hidden"
+            name="customer_name"
+            id="pay_customer_name"
+        >
+
+        <input
+            type="hidden"
+            name="phone"
+            id="pay_phone"
+        >
+
+        <input
+            type="hidden"
+            name="email"
+            id="pay_email"
+        >
+
+        <input
+            type="hidden"
+            name="address"
+            id="pay_address"
+        >
+
+
+        <button
+            type="submit"
+            class="place-order-btn"
+            onclick="copyCustomerDetails('pay')"
+        >
+
+            💳 Pay Now with Paystack
+
+        </button>
+
+    </form>
+
+
+    <p
+        id="payment-note"
+        style="
+            text-align:center;
+            color:#666;
+            margin-top:15px;
+        "
+    >
+
+        Your order will be paid for when delivered.
+
+    </p>
+
+
+</section>
+
+
+
+<!-- =========================================
+     ORDER SUMMARY
+========================================== -->
+
+<section class="order-summary">
+
+    <h2>
+        Your Order
+    </h2>
+
+
+    {% for item in cart_items %}
+
+    <div class="checkout-item">
+
+        <div>
+
+            <strong>
+                {{ item.name }}
+            </strong>
+
+            <br>
+
+            <small>
+                ₦{{ "%.2f"|format(item.price) }}
+                ×
+                {{ item.quantity }}
+            </small>
+
+        </div>
+
+
+        <strong>
+
+            ₦{{ "%.2f"|format(item.subtotal) }}
+
+        </strong>
+
+    </div>
+
+    {% endfor %}
+
+
+    <hr>
+
+
+    <div class="checkout-total">
+
+        <span>
+            Total
+        </span>
+
+        <strong>
+            ₦{{ "%.2f"|format(total_cost) }}
+        </strong>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('homepage') }}"
+        class="continue-shopping"
+    >
+
+        ← Continue Shopping
+
+    </a>
+
+</section>
+
+
+</main>
+
+<script>
+
+
+/* =========================================
+   COPY CUSTOMER INFORMATION
+========================================= */
+
+function copyCustomerDetails(type) {
+
+    const name =
+        document.getElementById("customer_name").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const address =
+        document.getElementById("address").value.trim();
+
+
+    if (type === "cash") {
+
+        document.getElementById("cash_customer_name").value = name;
+
+        document.getElementById("cash_phone").value = phone;
+
+        document.getElementById("cash_email").value = email;
+
+        document.getElementById("cash_address").value = address;
+
+    }
+
+
+    if (type === "pay") {
+
+        document.getElementById("pay_customer_name").value = name;
+
+        document.getElementById("pay_phone").value = phone;
+
+        document.getElementById("pay_email").value = email;
+
+        document.getElementById("pay_address").value = address;
+
+    }
+
+}
+
+
+
+/* =========================================
+   CASH PAYMENT
+========================================= */
+
+function showCashPayment() {
+
+    document.getElementById("cashForm").style.display = "block";
+
+    document.getElementById("paystackForm").style.display = "none";
+
+
+    document.getElementById("payment-note").textContent =
+        "Your order will be paid for when delivered.";
+
+}
+
+
+
+/* =========================================
+   PAYSTACK PAYMENT
+========================================= */
+
+function showPaystackPayment() {
+
+    document.getElementById("cashForm").style.display = "none";
+
+    document.getElementById("paystackForm").style.display = "block";
+
+
+    document.getElementById("payment-note").textContent =
+        "You will be redirected to Paystack to complete your payment.";
+
+}
+
+
+
+/* =========================================
+   VALIDATE PAYSTACK FORM
+========================================= */
+
+document
+    .getElementById("paystackForm")
+    .addEventListener("submit", function(event) {
+
+        const name =
+            document.getElementById("customer_name").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+
+        if (
+            name === "" ||
+            phone === "" ||
+            email === "" ||
+            address === ""
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                "Please fill in all your customer information before paying."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById("pay_customer_name").value = name;
+
+        document.getElementById("pay_phone").value = phone;
+
+        document.getElementById("pay_email").value = email;
+
+        document.getElementById("pay_address").value = address;
+
+    });
+
+
+
+/* =========================================
+   VALIDATE CASH FORM
+========================================= */
+
+document
+    .getElementById("cashForm")
+    .addEventListener("submit", function(event) {
+
+        const name =
+            document.getElementById("customer_name").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+
+        if (
+            name === "" ||
+            phone === "" ||
+            email === "" ||
+            address === ""
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                "Please fill in all your customer information before placing your order."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById("cash_customer_name").value = name;
+
+        document.getElementById("cash_phone").value = phone;
+
+        document.getElementById("cash_email").value = email;
+
+        document.getElementById("cash_address").value = address;
+
+    });
+
+
+</script>
+
+</body>
+
+</html>

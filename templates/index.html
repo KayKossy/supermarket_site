@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admiralty SuperMarket</title>
+
+    <link rel="icon"
+          type="image/jpeg"
+          href="{{ url_for('static', filename='images/icon.jpeg') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* =========================================
+           SHOP PAGE BACKGROUND
+        ========================================= */
+
+        body {
+            margin: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+
+            top: -20px;
+            left: -20px;
+
+            width: calc(100% + 40px);
+            height: calc(100% + 40px);
+
+            background-image:
+                url("https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/DSC_8396-scaled-1.jpg");
+
+            background-size: cover;
+            background-position: center;
+
+            filter: blur(8px);
+
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(255, 255, 255, 0.25);
+
+            z-index: -1;
+        }
+
+
+        /* =========================================
+           PRODUCT QUANTITY CONTROLS
+        ========================================= */
+
+        .product-quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-top: 12px;
+        }
+
+        .product-quantity form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+
+            border: none;
+            border-radius: 50%;
+
+            color: white;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s;
+        }
+
+        .decrease-btn {
+            background: #777;
+        }
+
+        .decrease-btn:hover {
+            background: #555;
+            transform: scale(1.05);
+        }
+
+        .increase-btn {
+            background: #489b5c;
+        }
+
+        .increase-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .quantity-number {
+            min-width: 45px;
+
+            text-align: center;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            color: #222;
+        }
+
+
+        /* =========================================
+           CART STATUS
+        ========================================= */
+
+        .cart-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .cart-status strong {
+            color: #159447;
+        }
+
+
+        /* =========================================
+           ADD TO CART BUTTON
+        ========================================= */
+
+        .add-btn {
+            margin-top: 5px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .product-quantity {
+                gap: 8px;
+            }
+
+            .quantity-btn {
+                width: 32px;
+                height: 32px;
+
+                font-size: 20px;
+            }
+
+            .quantity-number {
+                min-width: 40px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     CUSTOMER CARE BUTTON
+========================================= -->
+
+<div class="chat-button"
+     onclick="toggleChat()">
+
+    💬
+
+</div>
+
+
+<!-- =========================================
+     CUSTOMER CARE CHATBOX
+========================================= -->
+
+<div class="chatbox"
+     id="chatbox">
+
+    <div class="chat-header">
+
+        <strong>
+            Admiralty Customer Care
+        </strong>
+
+        <button onclick="toggleChat()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="chat-messages"
+         id="chatMessages">
+
+        <div class="bot-message">
+
+            Hello! 👋 Welcome to Admiralty Market.
+            How can we help you today?
+
+        </div>
+
+    </div>
+
+
+    <div class="chat-input">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+            onkeypress="handleEnter(event)"
+        >
+
+        <button onclick="sendMessage()">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     CUSTOMER CARE JAVASCRIPT
+========================================= -->
+
+<script>
+
+function toggleChat() {
+
+    const chatbox =
+        document.getElementById("chatbox");
+
+    if (chatbox.style.display === "block") {
+
+        chatbox.style.display = "none";
+
+    } else {
+
+        chatbox.style.display = "block";
+
+    }
+
+}
+
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+
+}
+
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("chatInput");
+
+    const message =
+        input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+
+    const userMessage =
+        document.createElement("div");
+
+    userMessage.className =
+        "user-message";
+
+    userMessage.textContent =
+        message;
+
+    chatMessages.appendChild(
+        userMessage
+    );
+
+
+    input.value = "";
+
+
+    setTimeout(function() {
+
+        const botMessage =
+            document.createElement("div");
+
+        botMessage.className =
+            "bot-message";
+
+
+        const lowerMessage =
+            message.toLowerCase();
+
+
+        if (
+            lowerMessage.includes("price")
+        ) {
+
+            botMessage.textContent =
+                "You can see the price of each product directly on its product card. 😊";
+
+        }
+
+        else if (
+            lowerMessage.includes("delivery")
+        ) {
+
+            botMessage.textContent =
+                "Our customer care team can help you with delivery information.";
+
+        }
+
+        else if (
+            lowerMessage.includes("hello") ||
+            lowerMessage.includes("hi")
+        ) {
+
+            botMessage.textContent =
+                "Hello! 👋 How can we help you today?";
+
+        }
+
+        else if (
+            lowerMessage.includes("cart")
+        ) {
+
+            botMessage.textContent =
+                "Use the + and − buttons on each product to change the quantity.";
+
+        }
+
+        else {
+
+            botMessage.textContent =
+                "Thanks for contacting Admiralty Market. 😊 A customer care representative will assist you shortly.";
+
+        }
+
+
+        chatMessages.appendChild(
+            botMessage
+        );
+
+
+        chatMessages.scrollTop =
+            chatMessages.scrollHeight;
+
+    }, 500);
+
+}
+
+</script>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+
+    <!-- LOGO + MARKET NAME -->
+
+    <div class="header-left">
+
+        <h1 class="market-title">
+
+            <img
+                src="{{ url_for('static', filename='images/navy.png') }}"
+                width="65"
+                height="100"
+                alt="Admiralty Market Logo"
+                class="logo"
+            >
+
+            Admiralty Market
+
+        </h1>
+
+    </div>
+
+
+    <!-- =====================================
+         SEARCH
+    ====================================== -->
+
+    <form
+        action="{{ url_for('homepage') }}"
+        method="GET"
+        class="search-form"
+    >
+
+        <div class="search-wrapper">
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search groceries..."
+                value="{{ request.args.get('search', '') }}"
+            >
+
+        </div>
+
+    </form>
+
+
+    <!-- =====================================
+         CART SUMMARY
+    ====================================== -->
+
+    <div class="cart-status">
+
+        <span>
+
+            🛒 Items:
+
+            <strong>
+                {{ cart_count }}
+            </strong>
+
+        </span>
+
+
+        <span>
+            |
+        </span>
+
+
+        <span>
+
+            Total:
+
+            <strong>
+                ₦{{ "%.2f"|format(total_cost) }}
+            </strong>
+
+        </span>
+
+
+        {% if cart_count > 0 %}
+
+        <a
+            href="{{ url_for('checkout') }}"
+            class="checkout-btn"
+        >
+            Checkout
+        </a>
+
+
+        <a
+            href="{{ url_for('clear_cart') }}"
+            class="clear-btn"
+        >
+            Clear
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     CATEGORY NAVIGATION
+========================================= -->
+
+<nav class="categories">
+
+    <a href="{{ url_for('homepage') }}">
+        All Items
+    </a>
+
+    <a href="{{ url_for('homepage', category='Produce') }}">
+        🥬 Produce
+    </a>
+
+    <a href="{{ url_for('homepage', category='Dairy') }}">
+        🥛 Dairy
+    </a>
+
+    <a href="{{ url_for('homepage', category='Bakery') }}">
+        🍞 Bakery
+    </a>
+
+    <a href="{{ url_for('homepage', category='Pantry') }}">
+        🍫 Pantry
+    </a>
+
+</nav>
+
+
+<!-- =========================================
+     ABOUT NAVIGATION
+========================================= -->
+
+<nav class="about">
+
+    <a href="#home">
+        Home
+    </a>
+
+    <a href="#about">
+        About
+    </a>
+
+    <a href="#contact">
+        Contact
+    </a>
+
+</nav>
+
+
+<!-- =========================================
+     PRODUCT GRID
+========================================= -->
+
+<main class="product-grid">
+
+
+    {% for id, details in products.items() %}
+
+
+    <div class="product-card">
+
+
+        <!-- PRODUCT IMAGE -->
+
+        <img
+            src="{{ url_for('static', filename='images/' + details.image) }}"
+            alt="{{ details.name }}"
+            class="product-image"
+        >
+
+
+        <!-- PRODUCT NAME -->
+
+        <h3>
+            {{ details.name }}
+        </h3>
+
+
+        <!-- CATEGORY -->
+
+        <p class="category-tag">
+            {{ details.category }}
+        </p>
+
+
+        <!-- PRICE -->
+
+        <p class="price">
+
+            ₦{{ "%.2f"|format(details.price) }}
+
+        </p>
+
+
+        <!-- =================================
+             CHECK PRODUCT QUANTITY
+        ================================== -->
+
+        {% set quantity = cart.get(id|string, 0) %}
+
+
+        {% if quantity > 0 %}
+
+
+        <!-- =================================
+             QUANTITY CONTROLS
+        ================================== -->
+
+        <div class="product-quantity">
+
+
+            <!-- MINUS -->
+
+            <form
+                action="{{ url_for('decrease_quantity', product_id=id) }}"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="quantity-btn decrease-btn"
+                    title="Decrease quantity"
+                >
+
+                    −
+
+                </button>
+
+            </form>
+
+
+            <!-- QUANTITY -->
+
+            <span class="quantity-number">
+
+                ×{{ quantity }}
+
+            </span>
+
+
+            <!-- PLUS -->
+
+            <form
+                action="{{ url_for('increase_quantity', product_id=id) }}"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="quantity-btn increase-btn"
+                    title="Increase quantity"
+                >
+
+                    +
+
+                </button>
+
+            </form>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =================================
+             ADD TO CART
+        ================================== -->
+
+        <form
+            action="{{ url_for('add_to_cart', product_id=id) }}"
+            method="POST"
+        >
+
+            <button
+                type="submit"
+                class="add-btn"
+            >
+
+                🛒 Add to Cart
+
+            </button>
+
+        </form>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</main>
+
+
+<!-- =========================================
+     TAGLINE
+========================================= -->
+
+<p class="tagline">
+
+    Fresh groceries, Better living💚
+
+</p>
+
+
+<hr>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <p>
+
+        Copyright &copy; 2026
+
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

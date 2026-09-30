@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order Successful - Admiralty Market</title>
+
+    <link rel="icon"
+          type="image/jpeg"
+          href="{{ url_for('static', filename='images/icon.jpeg') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .order-id-box {
+            background: #e8f5e9;
+            border: 2px dashed #198754;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .order-id-label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #198754;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .order-id-number {
+            display: block;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #14532d;
+            margin-bottom: 10px;
+        }
+
+        .order-id-help {
+            display: block;
+            color: #555;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="success-page">
+
+
+    <div class="success-container">
+
+
+        <!-- SUCCESS ICON -->
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        <h1>
+            Order Successful!
+        </h1>
+
+
+        <p>
+            Thank you for shopping with
+            <strong>Admiralty Market</strong>.
+        </p>
+
+
+        <p>
+            Your order has been received successfully.
+        </p>
+
+
+        <!-- ORDER DETAILS -->
+
+        <div class="success-details">
+
+
+            <!-- ORDER ID -->
+
+            {% if order_id %}
+
+            <div class="order-id-box">
+
+                <span class="order-id-label">
+                    YOUR ORDER ID
+                </span>
+
+                <strong class="order-id-number">
+                    {{ order_id }}
+                </strong>
+
+                <span class="order-id-help">
+                    Give this Order ID to the dispatch rider.
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- CUSTOMER -->
+
+            {% if customer_name %}
+
+            <p>
+                <strong>Customer:</strong>
+                {{ customer_name }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- PAYMENT METHOD -->
+
+            {% if payment_method %}
+
+            <p>
+                <strong>Payment Method:</strong>
+                {{ payment_method }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- TOTAL -->
+
+            {% if total_cost is defined %}
+
+            <p>
+                <strong>Total:</strong>
+                ₦{{ "%.2f"|format(total_cost) }}
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- PAYMENT MESSAGE -->
+
+        {% if payment_method == "Cash on Delivery" %}
+
+        <p>
+            💵 Please have your payment ready when your
+            order is delivered.
+        </p>
+
+        {% elif payment_method == "Paystack" %}
+
+        <p>
+            💳 Your payment has been processed through Paystack.
+        </p>
+
+        {% else %}
+
+        <p>
+            We will contact you with more information about
+            your order.
+        </p>
+
+        {% endif %}
+
+
+        <!-- DISPATCH MESSAGE -->
+
+        <p>
+            📦 Please keep your Order ID safe.
+            You can use it to identify your order when
+            communicating with our dispatch rider.
+        </p>
+
+
+        <!-- BACK TO SHOP -->
+
+        <a
+            href="{{ url_for('homepage') }}"
+            class="back-shop-btn"
+        >
+            🛒 Continue Shopping
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>
