@@ -4,7 +4,9 @@
 
 .landing-page {
     margin: 0;
+    padding: 0;
     min-height: 100vh;
+
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
     background-image:
@@ -25,12 +27,16 @@
 .landing-page::before {
     content: "";
     position: fixed;
+
     top: -20px;
     left: -20px;
+
     width: calc(100% + 40px);
     height: calc(100% + 40px);
 
-    background-image: url("/static/images/supermarket-bg.jpeg");
+    background-image:
+        url("/static/images/supermarket-bg.jpeg");
+
     background-size: cover;
     background-position: center;
 
@@ -42,6 +48,7 @@
 .landing-page::after {
     content: "";
     position: fixed;
+
     inset: 0;
 
     background: rgba(255, 255, 255, 0.30);
@@ -51,19 +58,28 @@
 
 .landing-overlay {
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
+
     position: relative;
 }
 
+
+/* =========================================
+   LANDING HEADER
+========================================= */
+
 .landing-header {
     height: 78px;
+
     display: flex;
     align-items: center;
 
     padding: 0 8%;
 
     background: rgba(255, 255, 255, 0.38);
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
     backdrop-filter: blur(8px);
@@ -72,6 +88,7 @@
 .market-logo {
     display: flex;
     align-items: center;
+
     gap: 18px;
 
     font-size: 34px;
@@ -83,11 +100,17 @@
 .market-logo img {
     width: 58px;
     height: 58px;
+
     object-fit: contain;
 }
 
+
+/* =========================================
+   LANDING CONTENT
+========================================= */
+
 .landing-content {
-    flex: 1;
+    flex: 0 0 auto;
 
     display: flex;
     flex-direction: column;
@@ -95,12 +118,18 @@
 
     text-align: center;
 
-    padding-top: 32px;
+    padding-top: 8px;
+    padding-bottom: 0;
 }
 
 .welcome-text {
     position: relative;
+
     z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .small-heading {
@@ -118,19 +147,37 @@
     margin: 0;
 
     font-size: 70px;
+
     line-height: 1.05;
+
     font-weight: 800;
 
     color: #102e63;
 }
 
-.welcome-text > p:not(.small-heading):not(.description) {
-    margin: 15px 0 8px;
 
-    font-size: 24px;
+/* =========================================
+   LANDING TAGLINE
+========================================= */
+
+.landing-tagline {
+    margin: 10px 0 6px;
+
+    font-size: 27px;
+
+    line-height: 1.3;
+
+    font-weight: 600;
 
     color: #31578d;
+
+    text-align: center;
 }
+
+
+/* =========================================
+   LANDING DESCRIPTION
+========================================= */
 
 .description {
     max-width: 720px;
@@ -138,10 +185,18 @@
     margin: 0 auto;
 
     font-size: 18px;
-    line-height: 1.6;
+
+    line-height: 1.5;
 
     color: #31578d;
+
+    text-align: center;
 }
+
+
+/* =========================================
+   MARKET IMAGE
+========================================= */
 
 .mall-link {
     text-decoration: none;
@@ -149,9 +204,13 @@
     display: block;
 
     position: relative;
+
     z-index: 3;
 
-    margin-top: 15px;
+    width: 100%;
+
+    margin-top: 3px;
+    margin-bottom: 0;
 
     animation: floatingMall 4s ease-in-out infinite;
 }
@@ -159,21 +218,48 @@
 .mall-card {
     position: relative;
 
+    width: 100%;
+    max-width: 1250px;
+
+    margin: 0 auto;
+    padding: 0;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
+    line-height: 0;
 }
 
 .mall-card img {
-    width: min(1000px, 90vw);
-    max-height: 550px;
+    /*
+       Allows the image to fill the available
+       horizontal space instead of looking isolated.
+    */
+    width: 100%;
 
-    object-fit: contain;
+    max-width: 1250px;
+
+    /*
+       Keeps the image visually substantial
+       without creating excessive vertical space.
+    */
+    height: 430px;
+
+    object-fit: cover;
+
+    object-position: center;
 
     display: block;
 
+    margin: 0;
+
     filter:
-        drop-shadow(0 25px 20px rgba(0, 0, 0, 0.20));
+        drop-shadow(
+            0 25px 20px rgba(0, 0, 0, 0.20)
+        );
 
     transition: transform 0.35s ease;
 }
@@ -191,12 +277,18 @@
     100% {
         transform: translateY(0);
     }
-
 }
+
+
+/* =========================================
+   ENTER MARKET BUTTON
+========================================= */
 
 .mall-caption {
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     gap: 15px;
@@ -205,14 +297,19 @@
 
     padding: 15px 25px;
 
-    margin-top: -5px;
+    margin-top: -15px;
 
     background: #159447;
+
     color: white;
+
+    text-decoration: none;
 
     border-radius: 35px;
 
     font-size: 20px;
+
+    line-height: normal;
 
     box-shadow:
         0 10px 25px rgba(0, 0, 0, 0.18);
@@ -238,18 +335,107 @@
     transform: scale(1.02);
 }
 
+
+/* =========================================
+   SHOPPING HINT
+========================================= */
+
 .click-text {
-    margin: 15px 0 0;
+    margin: 6px 0 0;
 
     font-size: 15px;
+
+    line-height: normal;
 
     color: #49658b;
 }
 
+
+/* =========================================
+   LANDING FEATURES
+========================================= */
+
+.landing-features {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 55px;
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 10px auto 5px;
+
+    padding: 0 20px;
+
+    box-sizing: border-box;
+}
+
+.landing-feature {
+    flex: 1;
+
+    max-width: 230px;
+
+    text-align: center;
+
+    background: transparent;
+
+    border-radius: 0;
+
+    padding: 8px;
+
+    box-shadow: none;
+
+    backdrop-filter: none;
+
+    transition: transform 0.3s ease;
+}
+
+.landing-feature:hover {
+    transform: translateY(-5px);
+
+    box-shadow: none;
+}
+
+.feature-icon {
+    font-size: 32px;
+
+    line-height: 1;
+
+    margin-bottom: 10px;
+}
+
+.landing-feature h3 {
+    margin: 5px 0 7px;
+
+    font-size: 18px;
+
+    color: #102e63;
+}
+
+.landing-feature p {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    color: #49658b;
+}
+
+
+/* =========================================
+   LANDING FOOTER
+========================================= */
+
 .landing-footer {
     text-align: center;
 
-    padding: 15px;
+    padding: 8px;
 
     font-size: 14px;
 
@@ -267,6 +453,7 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
     margin: 0;
+
     padding: 20px;
 
     background-color: powderblue;
@@ -274,10 +461,21 @@ body {
     color: black;
 }
 
+
+/*
+   The landing page already has its own
+   full-screen layout, so remove the
+   normal body padding from it.
+*/
+body.landing-page {
+    padding: 0;
+}
+
 header {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     border-bottom: 2px solid #e0e0e0;
@@ -291,6 +489,7 @@ h1 {
 
 .market-title {
     display: flex;
+
     align-items: center;
 
     gap: 8px;
@@ -302,13 +501,16 @@ h1 {
 
 .market-title img {
     width: 35px;
+
     height: 35px;
 
     object-fit: contain;
 }
 
 
-/* SEARCH */
+/* =========================================
+   SEARCH
+========================================= */
 
 .search-form {
     flex: 1;
@@ -322,6 +524,7 @@ h1 {
     position: relative;
 
     display: flex;
+
     align-items: center;
 }
 
@@ -355,6 +558,8 @@ h1 {
     color: #0f172a;
 
     transition: all 0.2s ease;
+
+    box-sizing: border-box;
 }
 
 .search-wrapper input:focus {
@@ -369,7 +574,9 @@ h1 {
 }
 
 
-/* CART STATUS */
+/* =========================================
+   CART STATUS
+========================================= */
 
 .cart-status {
     background-color: #fff;
@@ -393,7 +600,9 @@ h1 {
 }
 
 
-/* CATEGORIES */
+/* =========================================
+   CATEGORIES
+========================================= */
 
 .categories {
     margin: 20px 0;
@@ -414,7 +623,7 @@ h1 {
 
     font-weight: 500;
 
-    transition: background 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .categories a:hover {
@@ -424,7 +633,9 @@ h1 {
 }
 
 
-/* ABOUT */
+/* =========================================
+   ABOUT
+========================================= */
 
 .about {
     text-align: right;
@@ -435,7 +646,9 @@ h1 {
 }
 
 
-/* PRODUCT GRID */
+/* =========================================
+   PRODUCT GRID
+========================================= */
 
 .product-grid {
     display: grid;
@@ -463,8 +676,8 @@ h1 {
         0 4px 6px rgba(0, 0, 0, 0.02);
 
     transition:
-        transform 0.2s,
-        box-shadow 0.2s;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .product-card:hover {
@@ -545,7 +758,7 @@ h1 {
 
     width: 100%;
 
-    transition: background 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .add-btn:hover {
@@ -661,7 +874,9 @@ h1 {
 }
 
 
-/* QUANTITY CONTROL */
+/* =========================================
+   QUANTITY CONTROL
+========================================= */
 
 .quantity-control {
     display: flex;
@@ -675,11 +890,13 @@ h1 {
 
 .quantity-control form {
     margin: 0;
+
     padding: 0;
 }
 
 .quantity-btn {
     width: 40px;
+
     height: 40px;
 
     border: none;
@@ -704,7 +921,7 @@ h1 {
 
     justify-content: center;
 
-    transition: 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .decrease-btn {
@@ -764,9 +981,11 @@ h1 {
     position: fixed;
 
     bottom: 25px;
+
     right: 25px;
 
     width: 55px;
+
     height: 55px;
 
     background-color: #489b5c;
@@ -778,6 +997,7 @@ h1 {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     font-size: 25px;
@@ -800,9 +1020,11 @@ h1 {
     position: fixed;
 
     bottom: 90px;
+
     right: 25px;
 
     width: 320px;
+
     height: 430px;
 
     background-color: white;
@@ -931,7 +1153,7 @@ h1 {
 
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
-    background: #f5f7f5;
+    background: url("/static/images/checkout2.jpg");
 
     color: #17315f;
 }
@@ -971,6 +1193,7 @@ h1 {
 
 .checkout-logo img {
     width: 50px;
+
     height: 50px;
 
     object-fit: contain;
@@ -1019,6 +1242,7 @@ h1 {
     display: block;
 
     margin-top: 18px;
+
     margin-bottom: 7px;
 
     font-weight: 600;
@@ -1086,7 +1310,7 @@ h1 {
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .place-order-btn:hover {
@@ -1187,10 +1411,13 @@ h1 {
 
     box-shadow:
         0 10px 35px rgba(0, 0, 0, 0.1);
+
+    box-sizing: border-box;
 }
 
 .success-icon {
     width: 75px;
+
     height: 75px;
 
     margin: auto;
@@ -1198,6 +1425,7 @@ h1 {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     border-radius: 50%;
@@ -1243,7 +1471,56 @@ h1 {
 
 
 /* =========================================
-   RESPONSIVE
+   ORDER ID BOX
+========================================= */
+
+.order-id-box {
+    background: #e8f5e9;
+
+    border: 2px dashed #198754;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 25px;
+
+    text-align: center;
+}
+
+.order-id-box span {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #198754;
+
+    margin-bottom: 8px;
+}
+
+.order-id-box strong {
+    display: block;
+
+    font-size: 28px;
+
+    letter-spacing: 2px;
+
+    color: #14532d;
+
+    margin-bottom: 8px;
+}
+
+.order-id-box small {
+    display: block;
+
+    color: #555;
+}
+
+
+/* =========================================
+   RESPONSIVE - 900px
 ========================================= */
 
 @media (max-width: 900px) {
@@ -1254,6 +1531,7 @@ h1 {
 
     .market-logo img {
         width: 48px;
+
         height: 48px;
     }
 
@@ -1265,11 +1543,37 @@ h1 {
         font-size: 19px;
     }
 
-    .mall-card img {
-        width: 85vw;
+    .landing-tagline {
+        font-size: 23px;
     }
 
+    .mall-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .mall-card img {
+        width: 100%;
+        max-width: 100%;
+
+        height: 380px;
+
+        object-fit: cover;
+    }
+
+    .landing-features {
+        gap: 12px;
+    }
+
+    .landing-feature {
+        padding: 15px;
+    }
 }
+
+
+/* =========================================
+   TABLET - 750px
+========================================= */
 
 @media (max-width: 750px) {
 
@@ -1291,7 +1595,29 @@ h1 {
         font-size: 18px;
     }
 
+    .landing-features {
+        flex-wrap: wrap;
+    }
+
+    .landing-feature {
+        flex: 1 1 40%;
+
+        max-width: 300px;
+    }
+
+    .mall-card img {
+        width: 100%;
+
+        height: 350px;
+
+        object-fit: cover;
+    }
 }
+
+
+/* =========================================
+   MOBILE - 600px
+========================================= */
 
 @media (max-width: 600px) {
 
@@ -1305,11 +1631,14 @@ h1 {
 
     .market-logo img {
         width: 42px;
+
         height: 42px;
     }
 
     .landing-content {
-        padding-top: 25px;
+        padding-top: 8px;
+
+        padding-bottom: 0;
     }
 
     .welcome-text h1 {
@@ -1322,8 +1651,12 @@ h1 {
         letter-spacing: 4px;
     }
 
-    .welcome-text > p:not(.small-heading):not(.description) {
+    .landing-tagline {
         font-size: 19px;
+
+        padding: 0 20px;
+
+        margin-top: 10px;
     }
 
     .description {
@@ -1332,14 +1665,46 @@ h1 {
         font-size: 16px;
     }
 
+    .mall-link {
+        margin-top: 3px;
+    }
+
+    .mall-card {
+        width: 100%;
+    }
+
     .mall-card img {
-        width: 95vw;
+        width: 100%;
+
+        height: 320px;
+
+        object-fit: cover;
     }
 
     .mall-caption {
         width: 230px;
 
         font-size: 17px;
+
+        margin-top: -12px;
+    }
+
+    .landing-features {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: 12px;
+    }
+
+    .landing-feature {
+        width: 85%;
+
+        max-width: 350px;
+
+        min-height: auto;
     }
 
     .shopping-cart {
@@ -1364,6 +1729,7 @@ h1 {
 
     .cart-item-image {
         width: 70px;
+
         height: 70px;
     }
 
@@ -1383,37 +1749,92 @@ h1 {
         font-size: 19px;
     }
 
-} 
-.tagline{
-    align-items: center;
+    .chatbox {
+        width: calc(100vw - 30px);
+
+        right: 15px;
+    }
+
+    .chat-button {
+        right: 15px;
+
+        bottom: 15px;
+    }
+
+    .checkout-form,
+    .order-summary {
+        padding: 20px;
+    }
+
+    .success-container {
+        width: 92%;
+
+        padding: 30px 20px;
+    }
 }
 
-.order-id-box {
-    background: #e8f5e9;
-    border: 2px dashed #198754;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    text-align: center;
-}
 
-.order-id-box span {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
-    color: #198754;
-    margin-bottom: 8px;
-}
+/* =========================================
+   VERY SMALL MOBILE - 400px
+========================================= */
 
-.order-id-box strong {
-    display: block;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: #14532d;
-    margin-bottom: 8px;
-}
+@media (max-width: 400px) {
 
-.order-id-box small {
-    display: block;
-    color: #555;
+    .market-logo {
+        font-size: 19px;
+    }
+
+    .market-logo img {
+        width: 36px;
+
+        height: 36px;
+    }
+
+    .welcome-text h1 {
+        font-size: 34px;
+    }
+
+    .small-heading {
+        font-size: 14px;
+
+        letter-spacing: 3px;
+    }
+
+    .landing-tagline {
+        font-size: 17px;
+    }
+
+    .description {
+        font-size: 15px;
+    }
+
+    .mall-link {
+        margin-top: 0;
+    }
+
+    .mall-card {
+        width: 100%;
+    }
+
+    .mall-card img {
+        width: 100%;
+
+        height: 290px;
+
+        object-fit: cover;
+    }
+
+    .mall-caption {
+        width: 210px;
+
+        padding: 12px 18px;
+
+        font-size: 16px;
+
+        margin-top: -10px;
+    }
+
+    .landing-features {
+        margin-top: 10px;
+    }
 }
